@@ -14,7 +14,7 @@ const char* structureNames[] = {
     "Village",
     "Ruine océanique",
     "Épave",
-    "Monument",
+    "Monument sous-marin",
     "Manoir",
     "Avant-poste",
     "Portail en ruine",
