@@ -102,7 +102,7 @@ void findStructures(FILE *file, int structureType, int mc, int dim, uint64_t see
                     continue;
             }
             // Affichage des coordonnées de la structure trouvée
-            printf("Structure %s trouvée à : %d, %d (icon: %s)\n", structureNames[structureType], pos.x, pos.z, getStructureIcon(structureType));
+            // printf("Structure %s trouvée à : %d, %d (icon: %s)\n", structureNames[structureType], pos.x, pos.z, getStructureIcon(structureType));
             // Écriture des coordonnées de la structure trouvée dans le fichier CSV
             fprintf(file, "%s,%d,%d,%s\n", structureNames[structureType], pos.x, pos.z, getStructureIcon(structureType));
         }
