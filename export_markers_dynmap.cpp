@@ -41,9 +41,9 @@ const char* getStructureIcon(int structureType)
         case Village: return "house";
         case Desert_Pyramid: return "temple";
         case Jungle_Temple: return "temple";
-        case Swamp_Hut: return "building";
+        case Swamp_Hut: return "door";
         case Igloo: return "blueflag";
-        case Ocean_Ruin: return "construction";
+        case Ocean_Ruin: return "tower";
         case Shipwreck: return "anchor";
         case Monument: return "temple";
         case Mansion: return "bighouse";
@@ -54,7 +54,7 @@ const char* getStructureIcon(int structureType)
         case Mineshaft: return "minecart";
         case Desert_Well: return "drink";
         case Geode: return "diamond";
-        case Trail_Ruins: return "construction";
+        case Trail_Ruins: return "tower";
         case Trial_Chambers: return "key";
         default: return "default";
     }
@@ -135,9 +135,9 @@ int main()
         Ruined_Portal,
         Ancient_City,
         Treasure,
-        Mineshaft,
+        // Mineshaft,
         Desert_Well,
-        // Geode, // Commenté pour exclure les géodes
+        // Geode,
         Trail_Ruins,
         Trial_Chambers
     };
