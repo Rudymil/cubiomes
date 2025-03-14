@@ -3,6 +3,9 @@
 #include <math.h>
 #include <locale.h>
 #include <windows.h>
+#include <fstream>
+#include <string>
+#include <iostream>
 
 // Tableau des noms des structures
 const char* structureNames[] = {
@@ -60,6 +63,38 @@ const char* getStructureIcon(int structureType)
     }
 }
 
+// Fonction pour lire la seed à partir du fichier server.properties
+uint64_t getSeedFromProperties(const std::string& filePath)
+{
+    std::ifstream file(filePath);
+    std::string line;
+    uint64_t seed = 0;
+
+    if (file.is_open())
+    {
+        while (std::getline(file, line))
+        {
+            if (line.find("level-seed") != std::string::npos)
+            {
+                size_t pos = line.find("=");
+                if (pos != std::string::npos)
+                {
+                    std::string seedStr = line.substr(pos + 1);
+                    seed = std::stoll(seedStr);
+                    break;
+                }
+            }
+        }
+        file.close();
+    }
+    else
+    {
+        std::cerr << "Impossible d'ouvrir le fichier " << filePath << std::endl;
+    }
+
+    return seed;
+}
+
 // Fonction pour trouver des structures dans une zone spécifiée
 void findStructures(FILE *file, int structureType, int mc, int dim, uint64_t seed,
     int x0, int z0, int x1, int z1)
@@ -112,8 +147,25 @@ void findStructures(FILE *file, int structureType, int mc, int dim, uint64_t see
 // Fonction principale
 int main()
 {
-    // Définition du seed et du rayon de recherche
-    uint64_t seed = -4357231103345683077LL;
+    // Configuration de la locale pour utiliser UTF-8
+    setlocale(LC_ALL, "fr_FR.UTF-8");
+    // Configuration de la console pour utiliser UTF-8
+    SetConsoleOutputCP(CP_UTF8);
+
+    // Chemin vers le fichier server.properties
+    std::string filePath = "../../Serveur-Minecraft/server.properties";
+
+    // Lire la seed à partir du fichier server.properties
+    uint64_t seed = getSeedFromProperties(filePath);
+
+    // Vérifier si la seed a été correctement lue
+    if (seed == 0)
+    {
+        std::cerr << "Erreur : Seed non trouvée dans le fichier server.properties" << std::endl;
+        return 1;
+    }
+
+    // Définition du rayon de recherche
     int r = 10000;
 
     // Variables pour la version de Minecraft et la dimension
@@ -142,11 +194,6 @@ int main()
         Trial_Chambers
     };
 
-    // Configuration de la locale pour utiliser UTF-8
-    setlocale(LC_ALL, "");
-    // Configuration de la console pour utiliser UTF-8
-    SetConsoleOutputCP(CP_UTF8);
-
     // Ouverture du fichier CSV pour écrire les résultats
     FILE *file = fopen("export_markers_dynmap.csv", "w");
     if (!file)
@@ -156,7 +203,7 @@ int main()
     }
 
     // Écriture de l'en-tête du fichier CSV
-    fprintf(file, "structureType,X,Z,icon\n");
+    fprintf(file, "structureType,x,z,icon\n");
 
     // Affichage des structures dans un rayon de r blocs
     printf("Structures dans un rayon de %d blocs (seed : %lld, version : %d, dimension : %d) :\n", r, seed, mcVersion, dimension);
