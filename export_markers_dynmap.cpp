@@ -166,7 +166,7 @@ int main()
     }
 
     // Définition du rayon de recherche
-    int r = 10000;
+    int r = 20000;
 
     // Variables pour la version de Minecraft et la dimension
     int mcVersion = MC_1_21_3;
@@ -187,9 +187,9 @@ int main()
         Ruined_Portal,
         Ancient_City,
         Treasure,
-        // Mineshaft,
+        Mineshaft,
         Desert_Well,
-        // Geode,
+        Geode,
         Trail_Ruins,
         Trial_Chambers
     };
