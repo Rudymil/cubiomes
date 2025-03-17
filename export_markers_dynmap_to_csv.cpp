@@ -15,10 +15,10 @@ const char* structureNames[] = {
     "Pyramide du désert",
     "Temple de la jungle",
     "Cabane de sorcière",
-    "Igloo",
+    "Iglou",
     "Village",
     "Ruine océanique",
-    "Épave",
+    "Epave",
     "Monument sous-marin",
     "Manoir",
     "Avant-poste",
@@ -33,7 +33,7 @@ const char* structureNames[] = {
     "Vestige de bastion",
     "Cité de l'End",
     "Passerelle de l'End",
-    "Île de l'End",
+    "Ile de l'End",
     "Ruine de sentier",
     "Chambre des épreuves"
 };
