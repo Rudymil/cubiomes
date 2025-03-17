@@ -231,7 +231,7 @@ int main()
         Ocean_Ruin,
         Outpost,
         Ruined_Portal,
-        Ruined_Portal_N,
+        // Ruined_Portal_N,
         Shipwreck,
         Swamp_Hut,
         Trail_Ruins,
