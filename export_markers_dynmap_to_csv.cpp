@@ -7,6 +7,8 @@
 #include <string>
 #include <iostream>
 
+#define NUM_STRONGHOLDS 128 // Define the maximum number of strongholds
+
 // Tableau des noms des structures
 const char* structureNames[] = {
     "Elément du terrain",
@@ -44,14 +46,14 @@ const char* getStructureIcon(int structureType)
         case Ancient_City: return "skull";
         case Bastion: return "building";
         case Desert_Pyramid: return "temple";
-        case Desert_Well: return "drink";
+        case Desert_Well: return "beer";
         case End_City: return "house";
         case End_Gateway: return "portal";
         case End_Island: return "pirateflag";
         case Feature: return "default";
         case Fortress: return "tower";
         case Geode: return "diamond";
-        case Igloo: return "blueflag";
+        case Igloo: return "walk";
         case Jungle_Temple: return "temple";
         case Mansion: return "bighouse";
         case Mineshaft: return "minecart";
@@ -62,11 +64,11 @@ const char* getStructureIcon(int structureType)
         case Ruined_Portal_N: return "portal";
         case Shipwreck: return "anchor";
         case Swamp_Hut: return "door";
-        case Trail_Ruins: return "tower";
+        case Trail_Ruins: return "factory";
         case Treasure: return "chest";
         case Trial_Chambers: return "key";
         case Village: return "house";
-        default: return "default";
+        default: return "pin";
     }
 }
 
@@ -151,6 +153,36 @@ void findStructures(FILE *file, int structureType, int mc, int dim, uint64_t see
     }
 }
 
+// Fonction pour rechercher les Strongholds
+void findStrongholds(FILE *file, int mc, int dim, uint64_t seed)
+{
+    // Initialisation de l'itérateur pour les Strongholds
+    StrongholdIter sh;
+    Pos pos;
+
+    // Initialisation du générateur pour les vérifications de biomes
+    Generator g;
+    setupGenerator(&g, mc, 0);
+    applySeed(&g, dim, seed);
+
+    // Initialisation du premier Stronghold
+    initFirstStronghold(&sh, mc, seed);
+
+    // Parcours des Strongholds
+    do
+    {
+        // Vérification des biomes et obtention de la position exacte
+        if (nextStronghold(&sh, &g))
+        {
+            pos = sh.pos;
+            // Affichage des coordonnées du Stronghold trouvé
+            // printf("Stronghold trouvé à : %d, %d (icon: gear)\n", pos.x, pos.z);
+            // Écriture des coordonnées du Stronghold dans le fichier CSV
+            fprintf(file, "Fort,%d,%d,gear\n", pos.x, pos.z);
+        }
+    } while (sh.index < NUM_STRONGHOLDS); // Continue jusqu'à ce que tous les Strongholds soient parcourus
+}
+
 // Fonction principale
 int main()
 {
@@ -219,10 +251,12 @@ int main()
     // Écriture de l'en-tête du fichier CSV
     fprintf(file, "structureType,x,z,icon\n");
 
-    // Affichage des structures dans un rayon de r blocs
-    printf("Structures dans un rayon de %d blocs (seed : %lld, version : %d, dimension : %d) :\n", r, seed, mcVersion, dimension);
+    // Recherche des Strongholds
+    printf("Recherche des forts (seed : %lld, version : %d, dimension : %d)...\n", seed, mcVersion, dimension);
+    findStrongholds(file, mcVersion, dimension, seed);
 
-    // Parcours de la liste des structures et appels à la fonction findStructures
+    // Recherche des autres structures
+    printf("Recherche des structures dans un rayon de %d blocs (seed : %lld, version : %d, dimension : %d)...\n", r, seed, mcVersion, dimension);
     for (int i = 0; i < sizeof(structures) / sizeof(structures[0]); i++)
     {
         findStructures(file, structures[i], mcVersion, dimension, seed, -r, -r, +r, +r);
