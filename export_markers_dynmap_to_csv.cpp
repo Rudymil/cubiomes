@@ -9,7 +9,7 @@
 
 // Tableau des noms des structures
 const char* structureNames[] = {
-    "Feature",
+    "Elément du terrain",
     "Pyramide du désert",
     "Temple de la jungle",
     "Cabane de sorcière",
@@ -28,9 +28,9 @@ const char* structureNames[] = {
     "Puit du désert",
     "Géode",
     "Forteresse",
-    "Bastion",
+    "Vestige de bastion",
     "Cité de l'End",
-    "Portail de l'End",
+    "Passerelle de l'End",
     "Île de l'End",
     "Ruine de sentier",
     "Chambre des épreuves"
@@ -41,24 +41,31 @@ const char* getStructureIcon(int structureType)
 {
     switch (structureType)
     {
-        case Village: return "house";
+        case Ancient_City: return "skull";
+        case Bastion: return "building";
         case Desert_Pyramid: return "temple";
-        case Jungle_Temple: return "temple";
-        case Swamp_Hut: return "door";
+        case Desert_Well: return "drink";
+        case End_City: return "house";
+        case End_Gateway: return "portal";
+        case End_Island: return "pirateflag";
+        case Feature: return "default";
+        case Fortress: return "tower";
+        case Geode: return "diamond";
         case Igloo: return "blueflag";
-        case Ocean_Ruin: return "tower";
-        case Shipwreck: return "anchor";
-        case Monument: return "temple";
+        case Jungle_Temple: return "temple";
         case Mansion: return "bighouse";
+        case Mineshaft: return "minecart";
+        case Monument: return "temple";
+        case Ocean_Ruin: return "tower";
         case Outpost: return "lighthouse";
         case Ruined_Portal: return "portal";
-        case Ancient_City: return "skull";
-        case Treasure: return "chest";
-        case Mineshaft: return "minecart";
-        case Desert_Well: return "drink";
-        case Geode: return "diamond";
+        case Ruined_Portal_N: return "portal";
+        case Shipwreck: return "anchor";
+        case Swamp_Hut: return "door";
         case Trail_Ruins: return "tower";
+        case Treasure: return "chest";
         case Trial_Chambers: return "key";
+        case Village: return "house";
         default: return "default";
     }
 }
@@ -174,24 +181,31 @@ int main()
 
     // Liste des types de structures à rechercher
     int structures[] = {
-        Village,
+        Ancient_City,
+        // Bastion,
         Desert_Pyramid,
-        Jungle_Temple,
-        Swamp_Hut,
+        Desert_Well,
+        // End_City,
+        // End_Gateway,
+        // End_Island,
+        // Feature, // for locations of temple generation attempts pre 1.13
+        // Fortress,
+        Geode,
         Igloo,
-        Ocean_Ruin,
-        Shipwreck,
-        Monument,
+        Jungle_Temple,
         Mansion,
+        Mineshaft,
+        Monument,
+        Ocean_Ruin,
         Outpost,
         Ruined_Portal,
-        Ancient_City,
-        Treasure,
-        Mineshaft,
-        Desert_Well,
-        Geode,
+        Ruined_Portal_N,
+        Shipwreck,
+        Swamp_Hut,
         Trail_Ruins,
-        Trial_Chambers
+        Treasure,
+        Trial_Chambers,
+        Village
     };
 
     // Ouverture du fichier CSV pour écrire les résultats
